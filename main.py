@@ -25,11 +25,7 @@ def reset_timer():
     canvas.itemconfig(timer_text, text="00:00")
 
 
-
-
 # ---------------------------- TIMER MECHANISM ------------------------------- #
-
-
 def start_timer():
     global reps, marks
     reps += 1
@@ -37,16 +33,30 @@ def start_timer():
     if reps % 8 == 0:
         count_down(LONG_BREAK_MIN*60)
         timer.config(text="Break", fg=RED)
+        raise_above_all()
 
     elif reps % 2 == 0:
         count_down(SHORT_BREAK_MIN*60)
         timer.config(text="Break", fg=PINK)
         marks += CHECK_MARK
         check_mark.config(text=marks)
+        raise_above_all()
 
     else:
         count_down(WORK_MIN*60)
         timer.config(text="Work", fg=GREEN)
+
+# Creating function so window will pop-up from behind all the window and on the top when break will start
+
+# ---------------------------- Pop-up window MECHANISM ------------------------------- #
+
+
+def raise_above_all():
+    window.deiconify()                  # it will make window maximize in background if minimized 1st hand
+                                    # Note: Window will not get popped up infront if not maximized state already
+    window.attributes('-topmost', 1)    # it will make the window popup
+    window.attributes('-topmost', 0)    # it makes window to let go him self back of the other window if we click on
+    # other window or other window it will remain on the top and have to minimize manually
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
@@ -57,17 +67,19 @@ def start_timer():
 def count_down(count):
     minute_time = int((count-count % 60)/60)
     second_time = int(count % 60)
+
+    # if you also want to add "00" to minute hand also
     # if second_time < 10 and minute_time < 10:
     #    canvas.itemconfig(timer_text, text=f"0{minute_time}:0{second_time}")
     if second_time < 10:
         canvas.itemconfig(timer_text, text=f"{minute_time}:0{second_time}")
-    #elif minute_time < 10:
+    # elif minute_time < 10:
     #   canvas.itemconfig(timer_text, text=f"0{minute_time}:{second_time}")
     else:
         canvas.itemconfig(timer_text, text=f"{minute_time}:{second_time}")
     if count > 0:
         global app_timer
-        app_timer = window.after(1000, count_down, count-1)
+        app_timer = window.after(10, count_down, count-1)
 
     # for testing purpose use 10 mili-second instead of 1000 mili-second so timer will run fast
     else:
@@ -81,6 +93,11 @@ window.config(padx=100, pady=50, bg=YELLOW)
 
 
 tomato_img = PhotoImage(file="tomato.png")
+# pomo_icon = PhotoImage(file="pomo.png")
+
+
+# Changing the title image of the app
+window.iconphoto(False, tomato_img)
 
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
 # changing bg color and removing canvas thickness
