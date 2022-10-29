@@ -79,7 +79,7 @@ def count_down(count):
         canvas.itemconfig(timer_text, text=f"{minute_time}:{second_time}")
     if count > 0:
         global app_timer
-        app_timer = window.after(10, count_down, count-1)
+        app_timer = window.after(1000, count_down, count-1)
 
     # for testing purpose use 10 mili-second instead of 1000 mili-second so timer will run fast
     else:
