@@ -26,6 +26,10 @@ def reset_timer():
     # when user press button the start button go in function mode again
     start_button.config(state=NORMAL)
 
+    # Below code will make start button active again
+    # refer to start_timer function to see why I disabled the button in first place
+    start_button.config(state=NORMAL)
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def start_timer():
@@ -47,13 +51,16 @@ def start_timer():
     else:
         count_down(WORK_MIN*60)
         timer.config(text="Work", fg=GREEN)
+    # The below code will fix the issue where user can press start multiple time and multiple session start at once
+    # and user have to stop the session manually
+    start_button.config(state=DISABLED)  # It will make button disable after user pressed the start button
+
 
         # It will fix the bug where you can start multiple
         # counter on top of each other and you have to manually reset them
         start_button.config(state=DISABLED)
 
 # Creating function so window will pop-up from behind all the window and on the top when break will start
-
 # ---------------------------- Pop-up window MECHANISM ------------------------------- #
 
 
