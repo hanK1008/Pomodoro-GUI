@@ -23,6 +23,8 @@ def reset_timer():
     timer.config(text="Timer")
     check_mark.config(text=marks)
     canvas.itemconfig(timer_text, text="00:00")
+    # when user press button the start button go in function mode again
+    start_button.config(state=NORMAL)
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -45,6 +47,10 @@ def start_timer():
     else:
         count_down(WORK_MIN*60)
         timer.config(text="Work", fg=GREEN)
+
+        # It will fix the bug where you can start multiple
+        # counter on top of each other and you have to manually reset them
+        start_button.config(state=DISABLED)
 
 # Creating function so window will pop-up from behind all the window and on the top when break will start
 
