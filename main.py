@@ -97,6 +97,7 @@ def count_down(count):
     # for testing purpose use 10 mili-second instead of 1000 mili-second so timer will run fast
     else:
         start_timer()
+#     Finishing the project
 
 
 # ---------------------------- UI SETUP ------------------------------- #
